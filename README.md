@@ -1,4 +1,4 @@
-# Git Course
+# Git Cheatsheet
 
 Git is a distributed revision contorl system -> a presistent map.
 
