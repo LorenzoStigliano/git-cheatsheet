@@ -62,3 +62,38 @@ When going back to to a commit, git gets the state of the project at **that** co
 2.  Detached HEAD  <br>
 - ``git checkout commit_hash`` now HEAD points at a commit and **not** a branch. All the commits done with a detached HEAD all the objects are unreachable, no branch can go to these commits. Only acessible by hash. They will deleted by the garbage collector. <br>
 - ``git checkout commit_hash`` then `` git branch unreachable`` now we can reach all of the commits with the detached HEAD and now they are all under the ``unreachable`` branch.
+
+## 6. Rebasing
+
+In this case we have two branches. ``main`` and ``new_branch``. We want to put the content of the two branches together. You can use ``merge`` but we will use ``git rebase main`` use this command wheb you are on ``new_branch``.
+
+1. git will find the commit which is the same for each branch (i.e. where they seperated)
+2. then it will move ``new_branch`` on top of ``main`` 
+3. now ``new_branch`` will have all the commits from ``main`` 
+
+Working the other way ``git rebase new_branch`` use this command wheb you are on ``main``. Now ``main`` and ``new_branch`` point at the same commit and look like a branch.
+
+- Merge preserves history
+- Rebase refactors history
+
+## 7. Distrbuted Version Control
+
+The default local branch is always under ``origin\`` so if we clone ``main`` branch. On the local machine we will be on ``origin\main``
+
+- ``git clone address_repo`` clones repo onto local machine, only copies the ``main`` branch unless told otherwise
+- ``git show-ref main`` shows all the commits with the branches that contain main
+
+### Pushing
+
+- change file
+- ``git add`` file to the staging area
+- ``git commit -m "new change"`` 
+- ``git push``
+
+### Pulling
+
+First make sure no one commited to the remote. If so there will be a **conflict** between your local machine and the remote (GitHub) you can use ``git push -f`` to force a push and overwrites the remote commit. To resolve this:
+
+- ``git fetch`` gets the current position of the remote and then we can sort out conflicts on local machine, using ``git merge origin/main``. Then we can ``git push``.
+
+- ``git pull`` does the above in **one** command that is a ``fetch`` followed by a ``merge``. So just use ``git pull`` when you need to update local
